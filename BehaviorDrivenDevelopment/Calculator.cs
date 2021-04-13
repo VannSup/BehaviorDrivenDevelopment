@@ -19,12 +19,12 @@ namespace BehaviorDrivenDevelopment
 
         public int Multiply()
         {
-            throw new NotImplementedException();
+            return FirstNumber * SecondNumber;
         }
 
         public int Divide()
         {
-            throw new NotImplementedException();
+            return FirstNumber / SecondNumber;
         }
     }
 }
