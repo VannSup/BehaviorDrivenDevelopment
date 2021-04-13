@@ -22,61 +22,77 @@ namespace SpecFlowCalculator.Specs.Steps
             _scenarioContext = scenarioContext;
         }
 
+        #region Given
         [Given("the first number is (.*)")]
         public void GivenTheFirstNumberIs(int number)
         {
-            _calculator.FirstNumber = number;
+            _calculator.InputsNumbers.Add(number);
         }
 
         [Given("the second number is (.*)")]
         public void GivenTheSecondNumberIs(int number)
         {
-            _calculator.SecondNumber = number;
+            _calculator.InputsNumbers.Add(number);
         }
 
-        [When("the two numbers are added")]
-        public void WhenTheTwoNumbersAreAdded()
+        [Given(@"the following numbers")]
+        public void GivenTheFollowingNumbers(Table table)
+        {
+            foreach(TableRow row in table.Rows)
+            {
+                _calculator.InputsNumbers.Add(int.Parse(row["Numbers"]));
+            }
+
+        }
+        #endregion
+
+        #region When
+        [When("numbers are added")]
+        public void WhenNumbersAreAdded()
         {
             _result = _calculator.Add();
         }
 
-        [When(@"the two numbers are subtracted")]
-        public void WhenTheTwoNumbersAreSubtracted()
+        [When("numbers are subtracted")]
+        public void WhenNumbersAreSubtracted()
         {
             _result = _calculator.Subtract();
         }
 
-        [When(@"the two numbers are multiply")]
-        public void WhenTheTwoNumbersAreMultiply()
+        [When("numbers are multiply")]
+        public void WhenNumbersAreMultiply()
         {
             _result = _calculator.Multiply();
         }
 
-        [When(@"the two numbers are divide")]
-        public void WhenTheTwoNumbersAreDivide()
+        [When("numbers are divide")]
+        public void WhenNumbersAreDivide()
         {
             try
             {
                 _result = _calculator.Divide();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 _scenarioContext.Add("Exception_CalculatorDivide", e);
             }
-            
-        }
 
+        }
+        #endregion
+
+        #region Then
         [Then("the result should be (.*)")]
         public void ThenTheResultShouldBe(int result)
         {
             _result.Should().Be(result);
         }
 
-        [Then(@"the user is presented with an error message")]
+        [Then("the user is presented with an error message")]
         public void ThenTheUserIsPresentedWithAnErrorMessage()
         {
             var exception = _scenarioContext["Exception_CalculatorDivide"];
             exception.Should().BeOfType<InvalidOperationException>().Which.Message.Should().Be("Cannot divide by 0");
         }
-
+        #endregion
     }
 }
