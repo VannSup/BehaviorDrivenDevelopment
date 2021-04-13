@@ -24,7 +24,17 @@ namespace BehaviorDrivenDevelopment
 
         public int Divide()
         {
-            return FirstNumber / SecondNumber;
+            try
+            {
+                return FirstNumber / SecondNumber;
+            }
+            catch(Exception e)
+            {
+                if (SecondNumber == 0)
+                    throw new InvalidOperationException("Cannot divide by 0");
+                else
+                    throw e;
+            }
         }
     }
 }

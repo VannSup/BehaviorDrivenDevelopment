@@ -29,3 +29,9 @@ Scenario: Divide two numbers
     And the second number is 2
     When the two numbers are divide
     Then the result should be 15
+
+Scenario: Divide two numbers with invalid second number
+    Given the first number is 30
+    And the second number is 0
+    When the two numbers are divide
+    Then the user is presented with an error message

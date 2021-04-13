@@ -1,5 +1,6 @@
 ﻿using BehaviorDrivenDevelopment;
 using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowCalculator.Specs.Steps
@@ -54,14 +55,28 @@ namespace SpecFlowCalculator.Specs.Steps
         [When(@"the two numbers are divide")]
         public void WhenTheTwoNumbersAreDivide()
         {
-            _result = _calculator.Divide();
+            try
+            {
+                _result = _calculator.Divide();
+            }catch(Exception e)
+            {
+                _scenarioContext.Add("Exception_CalculatorDivide", e);
+            }
+            
         }
-
 
         [Then("the result should be (.*)")]
         public void ThenTheResultShouldBe(int result)
         {
             _result.Should().Be(result);
         }
+
+        [Then(@"the user is presented with an error message")]
+        public void ThenTheUserIsPresentedWithAnErrorMessage()
+        {
+            var exception = _scenarioContext["Exception_CalculatorDivide"];
+            exception.Should().BeOfType<InvalidOperationException>().Which.Message.Should().Be("Cannot divide by 0");
+        }
+
     }
 }
