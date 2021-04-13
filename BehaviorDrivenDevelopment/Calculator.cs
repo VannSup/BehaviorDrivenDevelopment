@@ -16,5 +16,15 @@ namespace BehaviorDrivenDevelopment
         {
             return FirstNumber - SecondNumber;
         }
+
+        public int Multiply()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Divide()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

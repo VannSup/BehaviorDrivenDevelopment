@@ -17,3 +17,15 @@ Scenario: Subtract two numbers
     And the second number is 70
     When the two numbers are subtracted
     Then the result should be 50
+
+Scenario: Multiply two numbers
+    Given the first number is 6
+    And the second number is 7
+    When the two numbers are multiply
+    Then the result should be 42
+
+Scenario: Divide two numbers
+    Given the first number is 30
+    And the second number is 2
+    When the two numbers are divide
+    Then the result should be 15
